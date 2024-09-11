@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 const Edittodo = ({ todo }) => {
     const [description, setdescription] = useState(todo.description)
+    const navigate=useNavigate();
 
 const updatedescription=async(e)=>{
 e.preventDefault();
@@ -11,7 +13,12 @@ try {
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(body)
     })
-    window.location="/";
+    if(response.ok){
+    navigate("/");
+    }
+    else{
+        console.log("Failed to update todo");
+    }
 } catch (error) {
     console.log(error)
 }

@@ -6,10 +6,14 @@ const Listtodo = () => {
 
     const deletetodo = async (id) => {
         try {
-            const deletetodo = await fetch(`http://localhost:8000/${id}`, {
+            const response = await fetch(`http://localhost:8000/${id}`, {
                 method: "Delete"
             })
+            if(response.ok){
             settodos(todos.filter(todo => todo.todo_id !== id))
+            }else{
+                console.log('Failed to delete todo')
+            }
         } catch (error) {
             console.log(error.message)
         }
@@ -20,7 +24,6 @@ const Listtodo = () => {
         try {
             const response = await fetch("http://localhost:8000/todos")
             const jsondata = await response.json();
-            console.group(jsondata);
             settodos(jsondata);
         } catch (error) {
             console.log(error)
@@ -40,7 +43,6 @@ const Listtodo = () => {
     return (
         <div>
             <div class="container">
-                {/* <h2>Basic Table</h2> */}
                 <table class="table">
                     <thead>
                         <tr>
